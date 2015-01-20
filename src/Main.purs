@@ -17,7 +17,9 @@ import Models.Channel
 
 type State = { counter :: Number }
 
-data Action = Increment | Decrement
+data Action =
+  Increment
+  | Decrement
 
 spec :: T.Spec (T.Action _ State) State Unit Action
 spec =  T.Spec {
