@@ -1,6 +1,6 @@
 module Models.User where
 
 data User = User
-	{ name :: String,
+	{ name :: String
 	, email :: String
 	}
