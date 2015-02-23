@@ -23,6 +23,7 @@ data Action =
 
 spec :: T.Spec (T.Action _ State) State Unit Action
 spec =  T.Spec {
+        displayName : Just "chatty",
         render: render,
         performAction: performAction,
         initialState: initialState,
