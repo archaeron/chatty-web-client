@@ -34,23 +34,23 @@ spec = T.Spec
 
 render :: T.Render State Unit Action
 render ctx st _ =
-    container
-        [
-            header [],
-            body
-                [
-                    E.p'
-                        [
-                            E.p' [ H.text (show st.counter) ],
-                            E.button [ T.onClick ctx (const Increment)] [ H.text "Increment" ],
-                            E.button [ T.onClick ctx (const Decrement)] [ H.text "Decrement" ]
-                        ]
-                ]
-        ]
-    where
-        container = E.div [ A.className "container" ]
-        header = E.div [ A.className "header" ]
-        body = E.div [ A.className "body" ]
+	container
+		[
+			header [],
+			body
+				[
+					E.p'
+						[
+							E.p' [ H.text (show st.counter) ],
+							E.button [ T.onClick ctx (const Increment)] [ H.text "Increment" ],
+							E.button [ T.onClick ctx (const Decrement)] [ H.text "Decrement" ]
+						]
+				]
+		]
+	where
+		container = E.div [ A.className "container" ]
+		header = E.div [ A.className "header" ]
+		body = E.div [ A.className "body" ]
 
 performAction :: T.PerformAction Unit Action (T.Action _ State)
 performAction _ Increment = T.modifyState \st -> { counter: st.counter + 1 }
@@ -62,5 +62,5 @@ initialState =
 	}
 
 main = do
-    let cl = T.createClass spec
-    T.render cl unit
+	let cl = T.createClass spec
+	T.render cl unit
