@@ -1,7 +1,5 @@
 module Models.Group where
 
-data Group =
-	Group
-		{
-			name :: String
-		}
+data Group = Group
+	{ name :: String
+	}
