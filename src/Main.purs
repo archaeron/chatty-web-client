@@ -15,20 +15,22 @@ import qualified Thermite.Action as T
 import Models.Group
 import Models.Channel
 
-type State = { counter :: Number }
+type State =
+	{ counter :: Number
+	}
 
-data Action =
-  Increment
-  | Decrement
+data Action
+	= Increment
+	| Decrement
 
 spec :: T.Spec (T.Action _ State) State Unit Action
-spec =  T.Spec {
-        displayName : Just "chatty",
-        render: render,
-        performAction: performAction,
-        initialState: initialState,
-        componentWillMount: Nothing
-    }
+spec = T.Spec
+	{ displayName : Just "chatty"
+	, render: render
+	, performAction: performAction
+	, initialState: initialState
+	, componentWillMount: Nothing
+	}
 
 render :: T.Render State Unit Action
 render ctx st _ =
@@ -55,7 +57,9 @@ performAction _ Increment = T.modifyState \st -> { counter: st.counter + 1 }
 performAction _ Decrement = T.modifyState \st -> { counter: st.counter - 1 }
 
 initialState :: State
-initialState = { counter: 0 }
+initialState =
+	{ counter: 0
+	}
 
 main = do
     let cl = T.createClass spec
