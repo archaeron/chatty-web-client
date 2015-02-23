@@ -14,6 +14,8 @@ import qualified Thermite.Action as T
 
 import Models.Group
 import Models.Channel
+import Models.User
+import Models.Message
 
 type State =
 	{ counter :: Number
