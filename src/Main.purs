@@ -20,10 +20,13 @@ import Models.Message
 
 type State =
 	{ messages :: [Message]
+	, editText :: String
 	}
 
 data Action
-	= SendMessage
+	= SendMessage String
+	| SetEditText String
+	| DoNothing
 
 spec :: T.Spec (T.Action _ State) State Unit Action
 spec = T.Spec
@@ -44,10 +47,36 @@ messageView message =
 messagesView messages =
 	E.div [A.className "messages"] (messageView <$> messages)
 
-inputField ctx =
+foreign import getKeyCode
+	"function getKeyCode(e) {\
+	\  return e.keyCode;\
+	\}" :: T.KeyboardEvent -> Number
+
+foreign import getValue
+	"function getValue(e) {\
+	\  return e.target.value;\
+	\}" :: forall event. event -> String
+
+handleKeyPress :: T.KeyboardEvent -> Action
+handleKeyPress e =
+	case getKeyCode e of
+		13 -> SendMessage $ getValue e
+		27 -> SetEditText ""
+		_  -> DoNothing
+
+handleChangeEvent :: T.FormEvent -> Action
+handleChangeEvent e = SetEditText (getValue e)
+
+inputField st ctx =
 	E.div [A.className "input-field-container"]
-		[ E.input [A.className "input-field"] []
-		, E.button [ T.onClick ctx (const SendMessage) ] [ H.text "Send Message" ]
+		[ E.input
+			[ A.className "input-field"
+			, A.placeholder "placeholder"
+			, T.onKeyUp ctx handleKeyPress
+			, T.onChange ctx handleChangeEvent
+			, A.value st.editText
+			]
+			[]
 		]
 
 testUser1 :: User
@@ -65,7 +94,7 @@ render ctx st _ =
 		, body
 			[ messagesView st.messages
 			, E.p'
-				[ inputField ctx
+				[ inputField st ctx
 				]
 			]
 		]
@@ -75,12 +104,19 @@ render ctx st _ =
 		body = E.div [ A.className "body" ]
 
 performAction :: T.PerformAction Unit Action (T.Action _ State)
-performAction _ SendMessage =
-	T.modifyState \st -> { messages: ((TextMessage { from: testUser1, to: testUser2, text: "Hi You" }) : st.messages) }
+performAction _ (SendMessage sendMessage) =
+	T.modifyState \st ->
+		{ messages: ((TextMessage { from: testUser1, to: testUser2, text: sendMessage }) : st.messages)
+		, editText: ""
+		}
+performAction _ (SetEditText setEditText) =
+	T.modifyState \st -> st { editText = setEditText }
+performAction _ DoNothing = T.modifyState id
 
 initialState :: State
 initialState =
 	{ messages: testMessages
+	, editText: ""
 	}
 
 main = do

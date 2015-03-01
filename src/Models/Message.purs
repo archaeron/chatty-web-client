@@ -6,7 +6,7 @@ type BaseMessage m = { from :: User, to :: User | m }
 
 type TextMessage = BaseMessage (text :: String)
 
-type CodeMessage = BaseMessage ()
+type CodeMessage = BaseMessage (language :: String, text :: String)
 
 type FormulaMessage = BaseMessage ()
 
