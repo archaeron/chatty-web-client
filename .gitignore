@@ -2,3 +2,4 @@ bower_components/
 output/
 js/
 node_modules/
+.psci_modules/
