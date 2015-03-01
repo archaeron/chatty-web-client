@@ -12,6 +12,7 @@
   ],
   "dependencies": {
     "purescript-base": "*",
-    "purescript-thermite": "~0.5.0"
+    "purescript-thermite": "~0.5.0",
+    "purescript-arrays": "*"
   }
 }
