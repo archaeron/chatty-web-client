@@ -7,4 +7,4 @@
 - install node + npm
 	- install pulp
 - pulp dep install
-- pulp browserify > js/index.js
+- pulp browserify --to js/index.js
