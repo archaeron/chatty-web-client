@@ -1,20 +1,16 @@
 module Models.Message where
 
-type TextMessage =
-	{
-	}
+import Models.User
 
-type CodeMessage =
-	{
-	}
+type BaseMessage m = { from :: User, to :: User | m }
 
-type FormulaMessage =
-	{
-	}
+type TextMessage = BaseMessage (text :: String)
 
-type FileUpload =
-	{
-	}
+type CodeMessage = BaseMessage ()
+
+type FormulaMessage = BaseMessage ()
+
+type FileUpload = BaseMessage ()
 
 data Message
 	= TextMessage TextMessage
