@@ -1,0 +1,9 @@
+# Chatty Client
+
+# Installation
+
+- Pull repo
+- Install purescript
+- install node + npm
+	- install pulp
+- pulp browserify > js/index.js
