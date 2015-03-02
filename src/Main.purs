@@ -1,7 +1,5 @@
 module Main where
 
-import Debug.Trace
-
 import Data.Maybe
 
 import qualified Thermite as T
