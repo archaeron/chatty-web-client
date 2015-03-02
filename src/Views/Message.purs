@@ -9,7 +9,7 @@ import qualified Thermite.Html.Elements as E
 import Models.Channel
 import Models.Message
 
-messageTypeView :: MessageType -> Thermite.Types.Html _
+messageTypeView :: MessageType -> Thermite.Types.Html Models.Action.Action
 messageTypeView message =
 	case message of
 		TextMessage { text: text } ->
@@ -17,14 +17,14 @@ messageTypeView message =
 		otherwise ->
 			E.span [ A.className "message" ] []
 
-messageView :: Message -> Thermite.Types.Html _
+messageView :: Message -> Thermite.Types.Html Models.Action.Action
 messageView { from: from, to: to, message: message } =
 	E.li [ A.className "message" ]
 		[ E.span [ A.className "from" ] [ H.text from.name ]
 		, E.span [ A.className "message-content" ] [ messageTypeView message ]
 		]
 
-messagesView :: Channel -> [Message] -> Thermite.Types.Html _
+messagesView :: Channel -> [Message] -> Thermite.Types.Html Models.Action.Action
 messagesView selectedChannel messages =
 	E.div
 		[ A.className "messages" ]

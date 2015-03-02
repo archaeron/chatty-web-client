@@ -8,13 +8,13 @@ import qualified Thermite.Html.Elements as E
 
 import Models.Channel
 
-channelView :: Channel -> Thermite.Types.Html _
+channelView :: Channel -> Thermite.Types.Html Models.Action.Action
 channelView { name: name } =
 	E.li [ A.className "channel" ]
 		[ E.span [ A.className "channel-name" ] [ H.text name ]
 		]
 
-channelsView :: [Channel] -> Thermite.Types.Html _
+channelsView :: [Channel] -> Thermite.Types.Html Models.Action.Action
 channelsView channels =
 	E.div [ A.className "channels" ]
 		[ E.ul [ A.className "channels-list" ] (channelView <$> channels)
