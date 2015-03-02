@@ -2,18 +2,18 @@ module Models.Message where
 
 import Models.User
 
-type BaseMessage m = { from :: User, to :: User | m }
+type TextMessage = { text :: String }
 
-type TextMessage = BaseMessage (text :: String)
+type CodeMessage = { language :: String, text :: String }
 
-type CodeMessage = BaseMessage (language :: String, text :: String)
+type FormulaMessage = { }
 
-type FormulaMessage = BaseMessage ()
+type FileUpload = { }
 
-type FileUpload = BaseMessage ()
-
-data Message
+data MessageType
 	= TextMessage TextMessage
 	| CodeMessage CodeMessage
 	| FormulaMessage FormulaMessage
 	| FileUpload FileUpload
+
+type Message = { from :: User, to :: User, message :: MessageType }

@@ -22,6 +22,7 @@ import Helpers.Html
 type State =
 	{ messages :: [Message]
 	, editText :: String
+	, user :: User
 	}
 
 data Action
@@ -38,17 +39,22 @@ spec = T.Spec
 	, componentWillMount: Nothing
 	}
 
-messageView message =
+messageTypeView message =
 	case message of
-		TextMessage { from: from, to: to, text: text } ->
-			E.div [A.className "message"] [ H.text text ]
+		TextMessage { text: text } ->
+			E.span [ A.className "message-text" ] [ H.text text ]
 		otherwise ->
-			E.div [A.className "message"] []
+			E.span [ A.className "message" ] []
+
+messageView {from: from, to: to, message: message } =
+	E.li [ A.className "message" ]
+		[ E.span [ A.className "from" ] [ H.text from.name ]
+		, E.span [ A.className "to" ] [ H.text to.name ]
+		, E.span [ A.className "message-content" ] [ messageTypeView message ]
+		]
 
 messagesView messages =
-	E.div [A.className "messages"] (messageView <$> messages)
-
-
+	E.ul [A.className "messages"] (messageView <$> messages)
 
 handleKeyPress :: T.KeyboardEvent -> Action
 handleKeyPress e =
@@ -72,13 +78,8 @@ inputField st ctx =
 			[]
 		]
 
-testUser1 :: User
-testUser1 = { name: "Harry", email: "harry@potter.com" }
+testUser2 :: User
 testUser2 = { name: "Ron", email: "ron@potter.com" }
-testMessages :: [Message]
-testMessages =
-	[ TextMessage { from: testUser1, to: testUser2, text: "Hi Ron" }
-	]
 
 render :: T.Render State Unit Action
 render ctx st _ =
@@ -97,19 +98,28 @@ render ctx st _ =
 		body = E.div [ A.className "body" ]
 
 performAction :: T.PerformAction Unit Action (T.Action _ State)
-performAction _ (SendMessage sendMessage) =
-	T.modifyState \st ->
-		{ messages: ((TextMessage { from: testUser1, to: testUser2, text: sendMessage }) : st.messages)
-		, editText: ""
-		}
-performAction _ (SetEditText setEditText) =
-	T.modifyState \st -> st { editText = setEditText }
-performAction _ DoNothing = T.modifyState id
+performAction _ action =
+	case action of
+		SendMessage sendMessage ->
+			T.modifyState \st ->
+				{ messages: ({ from: st.user, to: testUser2, message: (TextMessage { text: sendMessage }) } : st.messages)
+				, editText: ""
+				, user: st.user
+				}
+		SetEditText setEditText ->
+			T.modifyState \st ->
+				st { editText = setEditText }
+		DoNothing ->
+			T.modifyState id
 
 initialState :: State
 initialState =
-	{ messages: testMessages
+	{ messages: []
 	, editText: ""
+	, user:
+		({ name: "Harry"
+		, email: "harry@potter.com"
+		})
 	}
 
 main = do
