@@ -3,7 +3,7 @@ body
 	font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
-.messages
+ul
 {
 	-webkit-margin-before: 0;
 	-webkit-margin-after: 0;
@@ -12,10 +12,41 @@ body
 	-webkit-padding-start: 0;
 }
 
+li
+{
+	list-style-type: none;
+}
+
+.container
+{
+	display: flex;
+	justify-content: center;
+	flex-flow: row wrap;
+}
+
+.header
+{
+	flex: 1 1 100%;
+}
+
+.channels
+{
+	flex: 1 auto;
+}
+
+.channel-name:hover
+{
+	background-color: gray;
+}
+
+.messages
+{
+	flex: 3 auto;
+}
+
 .message
 {
 	margin-top: 10px;
-	list-style-type: none;
 }
 
 .message .from
