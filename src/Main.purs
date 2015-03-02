@@ -17,17 +17,10 @@ import Models.Group
 import Models.Channel
 import Models.User
 import Models.Message
+import Models.State
 import Helpers.Html
 import Views.Message
 import Views.Channel
-
-type State =
-	{ messages :: [ Message ]
-	, editText :: String
-	, user :: User
-	, channels :: [ Channel ]
-	, selectedChannel :: Channel
-	}
 
 spec :: T.Spec (T.Action _ State) State Unit Action
 spec = T.Spec
@@ -41,18 +34,23 @@ spec = T.Spec
 handleKeyPress :: T.KeyboardEvent -> Action
 handleKeyPress e =
 	case getKeyCode e of
-		13 -> SendMessage $ getValue e
+		13 ->
+			let value = getValue e
+			in
+				case value of
+					"" -> DoNothing
+					otherwise -> SendMessage $ value
 		27 -> SetEditText ""
 		_  -> DoNothing
 
 handleChangeEvent :: T.FormEvent -> Action
 handleChangeEvent e = SetEditText (getValue e)
 
-inputField st ctx =
+inputField ctx st =
 	E.div [ A.className "input-field-container" ]
 		[ E.input
 			[ A.className "input-field"
-			, A.placeholder "enter a message here"
+			, A.placeholder "enter a message"
 			, T.onKeyUp ctx handleKeyPress
 			, T.onChange ctx handleChangeEvent
 			, A.value st.editText
@@ -67,9 +65,9 @@ render :: T.Render State Unit Action
 render ctx st _ =
 	container
 		[ header [ E.h1' [ H.text "Chatty" ] ]
-		, channelsView st.channels
+		, channelsView ctx st.channels
 		, messagesView st.selectedChannel st.messages
-		, inputField st ctx
+		, inputField ctx st
 		]
 	where
 		container = E.div [ A.className "container" ]
@@ -81,12 +79,15 @@ performAction _ action =
 		SendMessage sendMessage ->
 			T.modifyState \st ->
 				st { messages =
-					st.messages <> [ { from: st.user, to: testUser2, message: TextMessage { text: sendMessage } } ]
-				, editText = ""
+						st.messages <> [ { from: st.user, to: testUser2, message: TextMessage { text: sendMessage } } ]
+					, editText = ""
 				}
 		SetEditText setEditText ->
 			T.modifyState \st ->
 				st { editText = setEditText }
+		SelectChannel channel ->
+			T.modifyState \st ->
+				st { selectedChannel = channel }
 		DoNothing ->
 			T.modifyState id
 
