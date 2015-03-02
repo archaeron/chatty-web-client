@@ -17,6 +17,7 @@ import Models.Group
 import Models.Channel
 import Models.User
 import Models.Message
+import Helpers.Html
 
 type State =
 	{ messages :: [Message]
@@ -47,15 +48,7 @@ messageView message =
 messagesView messages =
 	E.div [A.className "messages"] (messageView <$> messages)
 
-foreign import getKeyCode
-	"function getKeyCode(e) {\
-	\  return e.keyCode;\
-	\}" :: T.KeyboardEvent -> Number
 
-foreign import getValue
-	"function getValue(e) {\
-	\  return e.target.value;\
-	\}" :: forall event. event -> String
 
 handleKeyPress :: T.KeyboardEvent -> Action
 handleKeyPress e =
