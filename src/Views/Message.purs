@@ -28,5 +28,6 @@ messagesView :: Channel -> [Message] -> Thermite.Types.Html Models.Action.Action
 messagesView selectedChannel messages =
 	E.div
 		[ A.className "messages" ]
-		[ E.ul [ A.className "messages-list" ] (messageView <$> messages)
+		[ E.h2' [ H.text selectedChannel.name ]
+		, E.ul [ A.className "messages-list" ] (messageView <$> messages)
 		]
