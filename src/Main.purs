@@ -85,7 +85,8 @@ performAction _ action =
 	case action of
 		SendMessage sendMessage ->
 			T.modifyState \st ->
-				{ messages: ({ from: st.user, to: testUser2, message: (TextMessage { text: sendMessage }) } : st.messages)
+				{ messages:
+					st.messages <> [ { from: st.user, to: testUser2, message: TextMessage { text: sendMessage } } ]
 				, editText: ""
 				, user: st.user
 				}
