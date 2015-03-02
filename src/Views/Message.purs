@@ -18,7 +18,6 @@ messageTypeView message =
 messageView {from: from, to: to, message: message } =
 	E.li [ A.className "message" ]
 		[ E.span [ A.className "from" ] [ H.text from.name ]
-		, E.span [ A.className "to" ] [ H.text to.name ]
 		, E.span [ A.className "message-content" ] [ messageTypeView message ]
 		]
 
