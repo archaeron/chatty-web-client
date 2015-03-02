@@ -3,7 +3,6 @@ module Main where
 import Debug.Trace
 
 import Data.Maybe
-import Data.Array
 
 import qualified Thermite as T
 import qualified Thermite.Html as H
@@ -18,6 +17,7 @@ import Models.Channel
 import Models.User
 import Models.Message
 import Helpers.Html
+import Views.Message
 
 type State =
 	{ messages :: [ Message ]
@@ -38,23 +38,6 @@ spec = T.Spec
 	, initialState: initialState
 	, componentWillMount: Nothing
 	}
-
-messageTypeView message =
-	case message of
-		TextMessage { text: text } ->
-			E.span [ A.className "message-text" ] [ H.text text ]
-		otherwise ->
-			E.span [ A.className "message" ] []
-
-messageView {from: from, to: to, message: message } =
-	E.li [ A.className "message" ]
-		[ E.span [ A.className "from" ] [ H.text from.name ]
-		, E.span [ A.className "to" ] [ H.text to.name ]
-		, E.span [ A.className "message-content" ] [ messageTypeView message ]
-		]
-
-messagesView messages =
-	E.ul [A.className "messages"] (messageView <$> messages)
 
 handleKeyPress :: T.KeyboardEvent -> Action
 handleKeyPress e =
