@@ -1,4 +1,25 @@
+body
+{
+	font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.messages
+{
+	-webkit-margin-before: 0;
+	-webkit-margin-after: 0;
+	-webkit-margin-start: 0;
+	-webkit-margin-end: 0;
+	-webkit-padding-start: 0;
+}
+
 .message
 {
-	border: 1px solid black
+	margin-top: 10px;
+	list-style-type: none;
+}
+
+.message .from
+{
+	font-weight: bold;
+	display: block;
 }
