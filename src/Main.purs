@@ -12,6 +12,7 @@ import qualified Thermite.Events as T
 import qualified Thermite.Html.Attributes as A
 import qualified Thermite.Action as T
 
+import Models.Action
 import Models.Group
 import Models.Channel
 import Models.User
@@ -27,11 +28,6 @@ type State =
 	, channels :: [ Channel ]
 	, selectedChannel :: Channel
 	}
-
-data Action
-	= SendMessage String
-	| SetEditText String
-	| DoNothing
 
 spec :: T.Spec (T.Action _ State) State Unit Action
 spec = T.Spec
