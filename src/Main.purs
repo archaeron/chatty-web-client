@@ -20,7 +20,7 @@ import Models.Message
 import Helpers.Html
 
 type State =
-	{ messages :: [Message]
+	{ messages :: [ Message ]
 	, editText :: String
 	, user :: User
 	}
@@ -67,10 +67,10 @@ handleChangeEvent :: T.FormEvent -> Action
 handleChangeEvent e = SetEditText (getValue e)
 
 inputField st ctx =
-	E.div [A.className "input-field-container"]
+	E.div [ A.className "input-field-container" ]
 		[ E.input
 			[ A.className "input-field"
-			, A.placeholder "placeholder"
+			, A.placeholder "enter a message here"
 			, T.onKeyUp ctx handleKeyPress
 			, T.onChange ctx handleChangeEvent
 			, A.value st.editText
@@ -117,9 +117,9 @@ initialState =
 	{ messages: []
 	, editText: ""
 	, user:
-		({ name: "Harry"
+		{ name: "Harry"
 		, email: "harry@potter.com"
-		})
+		}
 	}
 
 main = do
