@@ -9,3 +9,4 @@
 - Pull repo
 - `pulp dep install`
 - `pulp browserify --to js/index.js --watch`
+- open `index.html` in a browser
