@@ -1,5 +1,5 @@
 module Models.Channel where
 
-data Channel = Channel
+type Channel =
 	{ name :: String
 	}

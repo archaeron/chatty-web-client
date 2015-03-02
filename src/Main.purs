@@ -18,11 +18,14 @@ import Models.User
 import Models.Message
 import Helpers.Html
 import Views.Message
+import Views.Channel
 
 type State =
 	{ messages :: [ Message ]
 	, editText :: String
 	, user :: User
+	, channels :: [ Channel ]
+	, selectedChannel :: Channel
 	}
 
 data Action
@@ -67,28 +70,23 @@ testUser2 = { name: "Ron", email: "ron@potter.com" }
 render :: T.Render State Unit Action
 render ctx st _ =
 	container
-		[ header []
-		, body
-			[ messagesView st.messages
-			, E.p'
-				[ inputField st ctx
-				]
-			]
+		[ header [ E.h1' [ H.text "Chatty" ] ]
+		, channelsView st.channels
+		, messagesView st.selectedChannel st.messages
+		, inputField st ctx
 		]
 	where
 		container = E.div [ A.className "container" ]
 		header = E.div [ A.className "header" ]
-		body = E.div [ A.className "body" ]
 
 performAction :: T.PerformAction Unit Action (T.Action _ State)
 performAction _ action =
 	case action of
 		SendMessage sendMessage ->
 			T.modifyState \st ->
-				{ messages:
+				st { messages =
 					st.messages <> [ { from: st.user, to: testUser2, message: TextMessage { text: sendMessage } } ]
-				, editText: ""
-				, user: st.user
+				, editText = ""
 				}
 		SetEditText setEditText ->
 			T.modifyState \st ->
@@ -98,12 +96,14 @@ performAction _ action =
 
 initialState :: State
 initialState =
-	{ messages: []
+	{ messages: [ ]
 	, editText: ""
 	, user:
 		{ name: "Harry"
 		, email: "harry@potter.com"
 		}
+	, channels: [ { name: "Haskell" }, { name: "Purescript" } ]
+	, selectedChannel: { name: "Haskell" }
 	}
 
 main = do

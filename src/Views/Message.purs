@@ -6,6 +6,7 @@ import qualified Thermite.Html as H
 import qualified Thermite.Html.Attributes as A
 import qualified Thermite.Html.Elements as E
 
+import Models.Channel
 import Models.Message
 
 messageTypeView message =
@@ -23,3 +24,8 @@ messageView {from: from, to: to, message: message } =
 
 messagesView messages =
 	E.ul [ A.className "messages" ] (messageView <$> messages)
+messagesView selectedChannel messages =
+	E.div
+		[ A.className "messages" ]
+		[ E.ul [ A.className "messages-list" ] (messageView <$> messages)
+		]
