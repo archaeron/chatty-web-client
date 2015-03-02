@@ -23,3 +23,12 @@ body
 	font-weight: bold;
 	display: block;
 }
+
+.input-field
+{
+	padding: .67861em 1em;
+	background: white;
+	border: 1px solid rgba(0,0,0,.15);
+	color: rgba(0,0,0,.8);
+	border-radius: .2857rem;
+}
