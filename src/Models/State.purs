@@ -1,6 +1,7 @@
 module Models.State where
 
 import Models.Channel
+import Models.Input
 import Models.Message
 import Models.User
 
@@ -10,4 +11,5 @@ type State =
 	, user :: User
 	, channels :: [ Channel ]
 	, selectedChannel :: Channel
+	, selectedInputType :: InputType
 	}

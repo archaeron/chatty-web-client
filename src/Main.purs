@@ -11,14 +11,16 @@ import qualified Thermite.Html.Attributes as A
 import qualified Thermite.Action as T
 
 import Models.Action
-import Models.Group
 import Models.Channel
+import Models.Group
+import Models.Input
 import Models.User
 import Models.Message
 import Models.State
-import Helpers.Html
-import Views.Message
 import Views.Channel
+import Views.Input
+import Views.Message
+
 
 spec :: T.Spec (T.Action _ State) State Unit Action
 spec = T.Spec
@@ -29,33 +31,6 @@ spec = T.Spec
 	, componentWillMount: Nothing
 	}
 
-handleKeyPress :: T.KeyboardEvent -> Action
-handleKeyPress e =
-	case getKeyCode e of
-		13 ->
-			let value = getValue e
-			in
-				case value of
-					"" -> DoNothing
-					otherwise -> SendMessage $ value
-		27 -> SetEditText ""
-		_  -> DoNothing
-
-handleChangeEvent :: T.FormEvent -> Action
-handleChangeEvent e = SetEditText (getValue e)
-
-inputField ctx st =
-	E.div [ A.className "input-field-container" ]
-		[ E.textarea
-			[ A.className "input-field"
-			, A.placeholder "enter a message"
-			, T.onKeyUp ctx handleKeyPress
-			, T.onChange ctx handleChangeEvent
-			, A.value st.editText
-			]
-			[]
-		]
-
 testUser2 :: User
 testUser2 = { name: "Ron", email: "ron@potter.com" }
 
@@ -65,7 +40,7 @@ render ctx st _ =
 		[ header [ E.h1' [ H.text "Chatty" ] ]
 		, channelsView ctx st.channels
 		, messagesView st.selectedChannel st.messages
-		, inputField ctx st
+		, messageInput ctx st
 		]
 	where
 		container = E.div [ A.className "container" ]
@@ -99,6 +74,7 @@ initialState =
 		}
 	, channels: [ { name: "Haskell" }, { name: "Purescript" } ]
 	, selectedChannel: { name: "Haskell" }
+	, selectedInputType: TextInput
 	}
 
 main = do

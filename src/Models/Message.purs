@@ -8,12 +8,12 @@ type CodeMessage = { language :: String, text :: String }
 
 type FormulaMessage = { }
 
-type FileUpload = { }
+type FileMessage = { }
 
 data MessageType
 	= TextMessage TextMessage
 	| CodeMessage CodeMessage
 	| FormulaMessage FormulaMessage
-	| FileUpload FileUpload
+	| FileMessage FileMessage
 
 type Message = { from :: User, to :: User, message :: MessageType }
