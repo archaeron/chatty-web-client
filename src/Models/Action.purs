@@ -4,5 +4,5 @@ data Action
 	= SendMessage String
 	| SetEditText String
 	| SelectChannel Models.Channel.Channel
-	| SelectMessageType
+	| SelectInputType Models.Input.InputType
 	| DoNothing

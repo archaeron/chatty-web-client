@@ -43,6 +43,17 @@ inputField ctx st =
 		FileInput ->
 			H.text "FileInput"
 
+inputTypeSelector :: T.Context Models.State.State Unit Models.Action.Action -> InputType -> Thermite.Types.Html Models.Action.Action
+inputTypeSelector ctx textInput =
+	E.div [ ]
+		[ E.span [ T.onClick ctx (const $ SelectInputType TextInput) ] [ H.text "Text" ]
+		, E.span [ T.onClick ctx (const $ SelectInputType CodeInput) ] [ H.text "Code" ]
+		, E.span [ T.onClick ctx (const $ SelectInputType FormulaInput) ] [ H.text "Formula" ]
+		, E.span [ T.onClick ctx (const $ SelectInputType FileInput) ] [ H.text "File" ]
+		]
+
 messageInput ctx st =
 	E.div [ A.className "input-field-container" ]
-		[ inputField ctx st ]
+		[ inputTypeSelector ctx st.selectedInputType
+		, inputField ctx st
+		]

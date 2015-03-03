@@ -61,6 +61,9 @@ performAction _ action =
 		SelectChannel channel ->
 			T.modifyState \st ->
 				st { selectedChannel = channel }
+		SelectInputType inputType ->
+			T.modifyState \st ->
+				st { selectedInputType = inputType }
 		DoNothing ->
 			T.modifyState id
 
