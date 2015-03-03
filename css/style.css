@@ -5,6 +5,7 @@ body
 
 ul
 {
+	padding: 0;
 	-webkit-margin-before: 0;
 	-webkit-margin-after: 0;
 	-webkit-margin-start: 0;
@@ -31,7 +32,7 @@ li
 
 .channels
 {
-	flex: 1 auto;
+	flex: 1 20%;
 }
 
 .channel-name:hover
@@ -41,7 +42,7 @@ li
 
 .messages
 {
-	flex: 3 auto;
+	flex: 3 80%;
 }
 
 .message
