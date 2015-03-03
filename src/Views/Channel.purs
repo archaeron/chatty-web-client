@@ -16,7 +16,7 @@ channelView ctx channel@{ name: name } =
 	E.li [ A.className "channel" ]
 		[ E.span
 			[ A.className "channel-name"
-			, T.onClick ctx \_ -> SelectChannel channel
+			, T.onClick ctx (const $ SelectChannel channel)
 			]
 			[ H.text name ]
 		]
