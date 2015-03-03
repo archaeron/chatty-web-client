@@ -46,7 +46,7 @@ handleChangeEvent e = SetEditText (getValue e)
 
 inputField ctx st =
 	E.div [ A.className "input-field-container" ]
-		[ E.input
+		[ E.textarea
 			[ A.className "input-field"
 			, A.placeholder "enter a message"
 			, T.onKeyUp ctx handleKeyPress
