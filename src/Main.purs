@@ -39,8 +39,8 @@ render ctx st _ =
 	container
 		[ header [ E.h1' [ H.text "Chatty" ] ]
 		, contentContainer
-			[ channelsView ctx st.channels
-			, messagesView st.selectedChannel st.messages
+			[ channelsView ctx st.channels st.selectedChannel
+			, messagesView st.messages st.selectedChannel
 			, messageInput ctx st
 			]
 		]
@@ -78,8 +78,8 @@ initialState =
 		{ name: "Harry"
 		, email: "harry@potter.com"
 		}
-	, channels: [ { name: "Haskell" }, { name: "Purescript" } ]
-	, selectedChannel: { name: "Haskell" }
+	, channels: [ Channel { name: "Haskell" }, Channel { name: "Purescript" } ]
+	, selectedChannel: Channel { name: "Haskell" }
 	, selectedInputType: TextInput
 	}
 

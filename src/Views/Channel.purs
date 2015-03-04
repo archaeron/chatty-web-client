@@ -12,19 +12,26 @@ import Models.Action
 import Models.Channel
 import Views.Types
 
-channelView :: AppContext -> Channel -> AppHtml
-channelView ctx channel =
+channelViewSelectClass :: Channel -> Channel -> String
+channelViewSelectClass channel selectedChannel =
+	if channel == selectedChannel then
+		"selected"
+	else
+		""
+
+channelView :: AppContext -> Channel -> Channel -> AppHtml
+channelView ctx selectedChannel channel =
 	E.li [ A.className "channel" ]
 		[ E.span
-			[ A.className "channel-name"
+			[ A.className ("channel-name " ++ (channelViewSelectClass channel selectedChannel))
 			, T.onClick ctx (const $ SelectChannel channel)
 			]
-			[ H.text channel.name ]
+			[ H.text (unChannel channel).name ]
 		]
 
-channelsView :: AppContext -> [Channel] -> AppHtml
-channelsView ctx channels =
+channelsView :: AppContext -> [Channel] -> Channel -> AppHtml
+channelsView ctx channels selectedChannel =
 	E.div [ A.className "channels" ]
 		[ E.h2' [ H.text "Channels" ]
-		, E.ul [ A.className "channels-list" ] ((channelView ctx) <$> channels)
+		, E.ul [ A.className "channels-list" ] ((channelView ctx selectedChannel) <$> channels)
 		]

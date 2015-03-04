@@ -20,15 +20,16 @@ messageTypeView message =
 
 messageView :: Message -> AppHtml
 messageView { from: from, to: to, message: message } =
-	E.li [ A.className "message" ]
+	E.li
+		[ A.className "message" ]
 		[ E.span [ A.className "from" ] [ H.text from.name ]
 		, E.span [ A.className "message-content" ] [ messageTypeView message ]
 		]
 
-messagesView :: Channel -> [Message] -> AppHtml
-messagesView selectedChannel messages =
+messagesView :: [Message] -> Channel -> AppHtml
+messagesView messages selectedChannel =
 	E.div
 		[ A.className "messages" ]
-		[ E.h2' [ H.text selectedChannel.name ]
+		[ E.h2' [ H.text (unChannel selectedChannel).name ]
 		, E.ul [ A.className "messages-list" ] (messageView <$> messages)
 		]
