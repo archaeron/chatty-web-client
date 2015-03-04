@@ -9,6 +9,7 @@ import qualified Thermite.Types as T
 import Helpers.Html
 import Models.Action
 import Models.Input
+import Views.Types
 
 handleKeyPress :: T.KeyboardEvent -> Action
 handleKeyPress e =
@@ -30,32 +31,58 @@ inputField ctx st =
 		TextInput ->
 			E.textarea
 				[ A.className "text-input-field"
-				, A.placeholder "enter a message"
+				, A.placeholder "enter a text message"
 				, T.onKeyUp ctx handleKeyPress
 				, T.onChange ctx handleChangeEvent
 				, A.value st.editText
 				]
 				[ ]
 		CodeInput ->
-			H.text "CodeInput"
+			E.textarea
+				[ A.className "code-input-field"
+				, A.placeholder "enter a code message"
+				, T.onKeyUp ctx handleKeyPress
+				, T.onChange ctx handleChangeEvent
+				, A.value st.editText
+				]
+				[ ]
 		FormulaInput ->
-			H.text "FormulaInput"
+			E.textarea
+				[ A.className "formula-input-field"
+				, A.placeholder "enter a formula message"
+				, T.onKeyUp ctx handleKeyPress
+				, T.onChange ctx handleChangeEvent
+				, A.value st.editText
+				]
+				[ ]
 		FileInput ->
 			H.text "FileInput"
 
-inputTypeSelectTabHead :: T.Context Models.State.State Unit Models.Action.Action -> InputType -> String ->  Thermite.Types.Html Models.Action.Action
-inputTypeSelectTabHead ctx inputType text =
-	E.span [ T.onClick ctx (const $ SelectInputType inputType) ] [ H.text text ]
+inputTypeSelectTabHeadClass :: InputType -> InputType -> String
+inputTypeSelectTabHeadClass inputType selectedInputType =
+	if inputType == selectedInputType then
+		"selected input-type-select-tab"
+	else
+		"input-type-select-tab"
 
-inputTypeSelector :: T.Context Models.State.State Unit Models.Action.Action -> InputType -> Thermite.Types.Html Models.Action.Action
-inputTypeSelector ctx textInput =
-	E.div [ ]
-		[ inputTypeSelectTabHead ctx TextInput "Text"
-		, inputTypeSelectTabHead ctx CodeInput "Code"
-		, inputTypeSelectTabHead ctx FormulaInput "Formula"
-		, inputTypeSelectTabHead ctx FileInput "File"
+inputTypeSelectTabHead :: AppContext -> String -> InputType -> InputType -> AppHtml
+inputTypeSelectTabHead ctx text inputType selectedInputType =
+	E.span
+		[ T.onClick ctx (const $ SelectInputType inputType)
+		, A.className $ inputTypeSelectTabHeadClass inputType selectedInputType
+		]
+		[ H.text text ]
+
+inputTypeSelector :: AppContext -> InputType -> AppHtml
+inputTypeSelector ctx selectedInputType =
+	E.div [ A.className "input-types-select-tabs" ]
+		[ inputTypeSelectTabHead ctx "Text" TextInput selectedInputType
+		, inputTypeSelectTabHead ctx "Code" CodeInput selectedInputType
+		, inputTypeSelectTabHead ctx "Formula" FormulaInput selectedInputType
+		, inputTypeSelectTabHead ctx "File" FileInput selectedInputType
 		]
 
+messageInput :: AppContext -> _ -> AppHtml
 messageInput ctx st =
 	E.div [ A.className "input-field-container" ]
 		[ inputTypeSelector ctx st.selectedInputType
