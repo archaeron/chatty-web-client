@@ -13,8 +13,8 @@ import Models.Input
 import Models.State
 import Views.Types
 
-handleKeyPress :: T.KeyboardEvent -> Action
-handleKeyPress e =
+handleKeyPressText :: T.KeyboardEvent -> Action
+handleKeyPressText e =
 	case getKeyCode e of
 		13 ->
 			let value = getValue e
@@ -22,6 +22,18 @@ handleKeyPress e =
 				case value of
 					"" -> DoNothing
 					otherwise -> SendMessage $ TextMessage { text: value }
+		27 -> SetEditText ""
+		_  -> DoNothing
+
+handleKeyPressCode :: T.KeyboardEvent -> Action
+handleKeyPressCode e =
+	case getKeyCode e of
+		13 ->
+			let value = getValue e
+			in
+				case value of
+					"" -> DoNothing
+					otherwise -> SendMessage $ CodeMessage { language: "purescript", text: value }
 		27 -> SetEditText ""
 		_  -> DoNothing
 
@@ -34,7 +46,7 @@ inputField ctx st =
 			E.textarea
 				[ A.className "text-input-field"
 				, A.placeholder "enter a text message"
-				, T.onKeyUp ctx handleKeyPress
+				, T.onKeyUp ctx handleKeyPressText
 				, T.onChange ctx handleChangeEvent
 				, A.value st.editText
 				]
@@ -43,7 +55,7 @@ inputField ctx st =
 			E.textarea
 				[ A.className "code-input-field"
 				, A.placeholder "enter a code message"
-				, T.onKeyUp ctx handleKeyPress
+				, T.onKeyUp ctx handleKeyPressCode
 				, T.onChange ctx handleChangeEvent
 				, A.value st.editText
 				]
@@ -52,7 +64,7 @@ inputField ctx st =
 			E.textarea
 				[ A.className "formula-input-field"
 				, A.placeholder "enter a formula message"
-				, T.onKeyUp ctx handleKeyPress
+				, T.onKeyUp ctx handleKeyPressText
 				, T.onChange ctx handleChangeEvent
 				, A.value st.editText
 				]

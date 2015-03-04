@@ -15,6 +15,8 @@ messageTypeView message =
 	case message of
 		TextMessage { text: text } ->
 			E.span [ A.className "message-text" ] [ H.text text ]
+		CodeMessage { language: language, text: text } ->
+			E.pre [ A.className "message-code" ] [ H.text text ]
 		otherwise ->
 			E.span [ A.className "message" ] []
 
