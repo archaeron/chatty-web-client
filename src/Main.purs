@@ -38,12 +38,15 @@ render :: T.Render State Unit Action
 render ctx st _ =
 	container
 		[ header [ E.h1' [ H.text "Chatty" ] ]
-		, channelsView ctx st.channels
-		, messagesView st.selectedChannel st.messages
-		, messageInput ctx st
+		, contentContainer
+			[ channelsView ctx st.channels
+			, messagesView st.selectedChannel st.messages
+			, messageInput ctx st
+			]
 		]
 	where
 		container = E.div [ A.className "container" ]
+		contentContainer = E.div [ A.className "content-container" ]
 		header = E.div [ A.className "header" ]
 
 performAction :: T.PerformAction Unit Action (T.Action _ State)
