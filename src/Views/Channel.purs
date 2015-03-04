@@ -12,13 +12,13 @@ import Models.Action
 import Models.Channel
 
 channelView :: T.Context Models.State.State Unit Models.Action.Action -> Channel -> Thermite.Types.Html Models.Action.Action
-channelView ctx channel@{ name: name } =
+channelView ctx channel =
 	E.li [ A.className "channel" ]
 		[ E.span
 			[ A.className "channel-name"
 			, T.onClick ctx (const $ SelectChannel channel)
 			]
-			[ H.text name ]
+			[ H.text channel.name ]
 		]
 
 channelsView :: T.Context Models.State.State Unit Models.Action.Action -> [Channel] -> Thermite.Types.Html Models.Action.Action
