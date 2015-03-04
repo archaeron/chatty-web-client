@@ -42,6 +42,11 @@ h2
 	background-color: gray;
 }
 
+.channel-name.selected
+{
+	background-color: red;
+}
+
 .messages
 {
 	flex: 3 80%;
