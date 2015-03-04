@@ -6,11 +6,7 @@ body
 ul
 {
 	padding: 0;
-	-webkit-margin-before: 0;
-	-webkit-margin-after: 0;
-	-webkit-margin-start: 0;
-	-webkit-margin-end: 0;
-	-webkit-padding-start: 0;
+	margin: 0;
 }
 
 li
@@ -18,21 +14,27 @@ li
 	list-style-type: none;
 }
 
-.container
+h2
 {
-	display: flex;
-	justify-content: center;
-	flex-flow: row wrap;
+	margin-top: 0;
+}
+
+.content-container
+{
+	position: relative;
+	padding-left: 200px;
 }
 
 .header
 {
-	flex: 1 1 100%;
 }
 
 .channels
 {
-	flex: 1 20%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 180px;
 }
 
 .channel-name:hover
@@ -56,7 +58,40 @@ li
 	display: block;
 }
 
-.input-field
+.input-types-select-tabs
+{
+	display: table;
+	width: 100%;
+	padding: 10px 10px 0;
+	overflow: hidden;
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+.input-type-select-tab
+{
+	display: table-cell;
+	border-bottom: 1px solid #eee;
+	color: #ccc;
+	line-height: 40px;
+	text-align: center;
+	width: 50px;
+	cursor: pointer;
+	font-family: sans-serif;
+	font-size: 12px;
+}
+
+.input-type-select-tab.selected
+{
+	border-width: 1px;
+	border-radius: 5px 5px 0 0;
+	box-shadow: inset 0 1px 1px rgba(0,0,0,0.3);
+	color: #000;
+	border-bottom-color: #fff;
+}
+
+.text-input-field
 {
 	padding: .67861em 1em;
 	background: white;
