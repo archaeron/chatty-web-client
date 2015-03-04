@@ -52,10 +52,10 @@ render ctx st _ =
 performAction :: T.PerformAction Unit Action (T.Action _ State)
 performAction _ action =
 	case action of
-		SendMessage sendMessage ->
+		SendMessage message ->
 			T.modifyState \st ->
 				st { messages =
-						st.messages <> [ { from: st.user, to: testUser2, message: TextMessage { text: sendMessage } } ]
+						st.messages <> [ { from: st.user, to: testUser2, message: message } ]
 					, editText = ""
 				}
 		SetEditText setEditText ->

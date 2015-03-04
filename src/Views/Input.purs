@@ -8,6 +8,7 @@ import qualified Thermite.Types as T
 
 import Helpers.Html
 import Models.Action
+import Models.Message
 import Models.Input
 import Models.State
 import Views.Types
@@ -20,7 +21,7 @@ handleKeyPress e =
 			in
 				case value of
 					"" -> DoNothing
-					otherwise -> SendMessage $ value
+					otherwise -> SendMessage $ TextMessage { text: value }
 		27 -> SetEditText ""
 		_  -> DoNothing
 
