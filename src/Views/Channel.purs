@@ -10,8 +10,9 @@ import qualified Thermite.Types as T
 
 import Models.Action
 import Models.Channel
+import Views.Types
 
-channelView :: T.Context Models.State.State Unit Models.Action.Action -> Channel -> Thermite.Types.Html Models.Action.Action
+channelView :: AppContext -> Channel -> AppHtml
 channelView ctx channel =
 	E.li [ A.className "channel" ]
 		[ E.span
@@ -21,7 +22,7 @@ channelView ctx channel =
 			[ H.text channel.name ]
 		]
 
-channelsView :: T.Context Models.State.State Unit Models.Action.Action -> [Channel] -> Thermite.Types.Html Models.Action.Action
+channelsView :: AppContext -> [Channel] -> AppHtml
 channelsView ctx channels =
 	E.div [ A.className "channels" ]
 		[ E.h2' [ H.text "Channels" ]

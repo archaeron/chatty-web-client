@@ -9,6 +9,7 @@ import qualified Thermite.Types as T
 import Helpers.Html
 import Models.Action
 import Models.Input
+import Models.State
 import Views.Types
 
 handleKeyPress :: T.KeyboardEvent -> Action
@@ -82,7 +83,7 @@ inputTypeSelector ctx selectedInputType =
 		, inputTypeSelectTabHead ctx "File" FileInput selectedInputType
 		]
 
-messageInput :: AppContext -> _ -> AppHtml
+messageInput :: AppContext -> State -> AppHtml
 messageInput ctx st =
 	E.div [ A.className "input-field-container" ]
 		[ inputTypeSelector ctx st.selectedInputType
